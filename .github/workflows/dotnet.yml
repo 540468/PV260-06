@@ -8,3 +8,38 @@ jobs:
     steps:
       - name: Welcome Script
         run: echo "Welcome"
+        
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: [ '8.x.x' ]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
+      - name: Install Dependencies
+        run: dotnet restore ./Actions-Kata.sln
+      - name: Build Project
+        run: dotnet build ./Actions-Kata.sln
+    needs: [welcome]
+  
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: [ '8.x.x' ]
+    steps:
+      - name: Run tests
+        run: dotnet test ./Actions-Kata.sln
+    needs: [build]
+    
+  publish:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: [ '8.x.x' ]
+    steps:
+      - name: Publish
+        run: dotnet publish ./Actions-Kata.sln
+    needs: [test]
