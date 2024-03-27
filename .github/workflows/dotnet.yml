@@ -1,1 +1,10 @@
-﻿
+﻿name: pv260-seminar06
+
+on: [push]
+
+jobs:
+  welcome:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Welcome Script
+        run: echo "Welcome"
