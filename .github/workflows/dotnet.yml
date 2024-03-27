@@ -24,6 +24,8 @@ jobs:
         run: dotnet build ./Actions-Kata.sln
       - name: Upload
         uses: actions/upload-artifact@v4
+        with:
+          path: *
     needs: [welcome]
   
   test:
