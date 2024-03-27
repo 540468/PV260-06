@@ -21,11 +21,7 @@ jobs:
       - name: Install Dependencies
         run: dotnet restore ./Actions-Kata.sln
       - name: Build Project
-        run: dotnet build ./Actions-Kata.sln
-      - name: Upload
-        uses: actions/upload-artifact@v4
-        with:
-          path: *
+        run: dotnet build ./Actions-Kata.sln          
     needs: [welcome]
   
   test:
@@ -34,6 +30,9 @@ jobs:
       matrix:
         dotnet-version: [ '8.x.x' ]
     steps:
+      - uses: actions/checkout@v4
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
       - name: Run tests
         run: dotnet test ./Actions-Kata.sln
     needs: [build]
@@ -44,6 +43,9 @@ jobs:
       matrix:
         dotnet-version: [ '8.x.x' ]
     steps:
+      - uses: actions/checkout@v4
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
       - name: Publish
         run: dotnet publish ./Actions-Kata.sln
     needs: [test]
